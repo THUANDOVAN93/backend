@@ -25,7 +25,8 @@ useSeoMeta({
               <UButton @click="open = false" label="Close" color="neutral" variant="soft" />
             </template>
           </UModal>
-          <UButton label="404 page" color="neutral" @click="router.push('/404')" variant="soft" />
+          <!-- <UButton label="404 page" color="neutral" @click="router.push('/404')" variant="soft" /> -->
+          <UButton label="User Management" color="neutral" @click="router.push('/admin/users')" variant="soft" />
         </div>
       </UCard>
     </div>

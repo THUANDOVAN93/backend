@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +33,11 @@ Route::prefix('api/v1')->group(function () {
         Route::middleware(['throttle:uploads'])->group(function () {
             Route::post('upload', [UploadController::class, 'image'])->name('upload.image');
         });
+
+        Route::apiResource('users', UserController::class);
+        Route::patch('users/{ulid}/status', [UserController::class, 'updateStatus']);
+        Route::get('user-statuses', [UserController::class, 'getStatuses']);
+
+        Route::apiResource('roles', RoleController::class)->only(['index', 'store', 'destroy']);
     });
 });

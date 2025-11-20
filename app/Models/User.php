@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserStatus;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'status',
         'avatar',
         'password',
     ];
@@ -48,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => UserStatus::class,
         ];
     }
 
@@ -80,5 +83,35 @@ class User extends Authenticatable implements MustVerifyEmail
         $sanctumToken->accessToken->save();
 
         return $sanctumToken->plainTextToken;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', UserStatus::ACTIVE);
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', UserStatus::PENDING);
+    }
+
+    public function scopeSuspended($query)
+    {
+        return $query->where('status', UserStatus::SUSPENDED);
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === UserStatus::ACTIVE;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === UserStatus::PENDING;
+    }
+
+    public function isSuspended(): bool
+    {
+        return $this->status === UserStatus::SUSPENDED;
     }
 }
