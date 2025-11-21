@@ -12,7 +12,7 @@ class AuthServiceFactory
 
         return match ($guard) {
             'web' => new WebAuthService(),
-            'api' => new ApiAuthService(),
+            'api',  => new ApiAuthService(),
             default => throw new \InvalidArgumentException("Unsupported guard: {$guard}"),
         };
     }

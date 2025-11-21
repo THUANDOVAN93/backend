@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
             // If the guard is web, we will use the stateful api middleware
-            ->statefulApi()
+            //->statefulApi()
             ->throttleApi(redis: true)
             ->trustProxies(at: IpUtils::PRIVATE_SUBNETS)
             ->api(prepend: [
